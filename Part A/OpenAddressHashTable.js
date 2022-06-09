@@ -47,6 +47,20 @@ export default class OpenAddressHashTable {
     
     // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
+
+        let index = this.hashCode(key);
+        if(this.hashTable[index].key == key) {
+            return this.hashTable[index].value;
+        }
+        else {
+            while(this.hashTable[index] != undefined) {
+                index++;
+                index %= this.length;
+                if(this.hashTable[index].key == key) {
+                    return this.hashTable[index].value;
+                }
+            }
+        }
         return null;
     }
     
