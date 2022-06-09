@@ -76,6 +76,35 @@ export default class BinarySearchTree {
 
     // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
+        
+        let cursor = this.root;
+        while(cursor != null) {
+            if(key < cursor.key) {
+                cursor = cursor.left;
+            }
+            else if(key > cursor.key) {
+                cursor = cursor.right;
+            }
+            if(key == cursor.key) {
+                break;
+            }
+        }
+
+        if(cursor == null) {
+            console.log("Key could not be found");
+            return null;
+        }
+        else {
+            if(cursor == this.root) {
+                console.log("\nThe key has been found");
+                return cursor.data;
+            } 
+            else if(cursor != this.root && cursor.key == key) {
+                console.log("\nThe key has been found");
+                return cursor.data;
+            }
+
+        }
         return null;
     }
 
