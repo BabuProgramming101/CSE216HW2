@@ -65,7 +65,75 @@ export default class OpenAddressHashTable {
     }
     
     // @todo - YOU MUST DEFINE THIS METHOD
-    removeValue(key) {   
+    removeValue(key) {  
+        
+        let found = false;
+        for(let i = 0; i < this.length; i++) {
+            if(this.hashTable[i] == undefined) {
+                continue;
+            }
+            else {
+                if(this.hashTable[i].key == key) {
+                    this.size--;
+                    this.hashTable[i] = undefined;
+                    found = true;
+                }
+            }
+        }
+ 
+        if(found == true) {
+            console.log("The key has been found");
+        }
+        else {
+            console.log("The key has not been found");
+        }
+ 
+        //REHASHING AFTER REMOVAL
+ 
+        let counter = 0;
+        for(let i = 0; i < this.length; i++) {
+            if(this.hashTable[i] == undefined) {
+                continue;
+            }
+            else {
+                counter++;
+            }
+        }
+ 
+        let tempTable = [];
+        let secondCounter = 0;
+        for(let i = 0; i < this.length; i++) {
+            if(this.hashTable[i] == undefined) {
+                continue;
+            }
+            else if(this.hashTable[i] != undefined) {
+                tempTable[secondCounter] = this.hashTable[i];
+                secondCounter++;
+            }
+            if(secondCounter == counter) {
+                break;
+            }
+        }
+ 
+        for(let i = 0; i < this.length; i++) {
+            this.hashTable[i] = undefined;
+        }
+ 
+        for(let i = 0; i < counter; i++) {
+            let newNaturalIndex = this.hashCode(tempTable[i].key);
+            if(this.hashTable[newNaturalIndex] == undefined) {
+                this.hashTable[newNaturalIndex] = tempTable[i];
+            }
+            else {
+                while(this.hashTable[newNaturalIndex] != undefined) {
+                    newNaturalIndex++;
+                    newNaturalIndex %= this.length;
+                }
+                if(this.hashTable[newNaturalIndex] == undefined) {
+                    this.hashTable[newNaturalIndex] = tempTable[i];
+                }
+            }
+        }
     }
 
     // @todo - YOU MUST DEFINE THIS METHOD
