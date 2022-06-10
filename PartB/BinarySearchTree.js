@@ -76,7 +76,7 @@ export default class BinarySearchTree {
 
     // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
-        
+
         let cursor = this.root;
         while(cursor != null) {
             if(key < cursor.key) {
@@ -111,6 +111,51 @@ export default class BinarySearchTree {
     // @todo - YOU MUST DEFINE THIS METHOD
     removeValue(key) {
 
+        this.root = this.removeValueRecursively(this.root, key);
+
+    }
+
+    removeValueRecursively(node, key) {
+
+        if(node == null) {
+            return node;
+        }
+
+        if(key < node.key) {
+            node.left = this.removeValueRecursively(node.left, key);
+        }
+        else if (key > node.key) {
+            node.right = this.removeValueRecursively(node.right, key);
+        }
+        else {
+            if(node.left == null) {
+                return node.right;
+            }
+            else if(node.right == null) {
+                return node.left;
+            }
+            else {
+
+                let successorCursor = node;
+                let cursor = node.right;
+
+                while(cursor.left != null) {
+                    successorCursor = cursor;
+                    cursor = cursor.left;
+                }
+
+                if(successorCursor != node) {
+                    successorCursor.left = cursor.right;
+                }
+                else {
+                    successorCursor.right = cursor.right;
+                }
+
+                node.key = cursor.key;
+                node.data = cursor.data;
+            }
+        }
+        return node;
     }
 
     toStringRecursively(traveller, level) {

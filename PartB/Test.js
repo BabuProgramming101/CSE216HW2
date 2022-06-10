@@ -21,7 +21,9 @@ function addPersonToBST(person, tree) {
 let tree = new BinarySearchTree(KEY_LENGTH);
 
 // DEMONSTRATE ADDING VALUES TO THE BST, WHICH INCLUDES THE NEED TO MAKE THE BST BIGGER
-addPersonToBST(new Student(tree.generateKey(), "George", "Harrison", 4.0), tree);
+
+let rootKey = tree.generateKey();
+addPersonToBST(new Student(rootKey, "George", "Harrison", 4.0), tree);
 addPersonToBST(new Employee(tree.generateKey(), "Paul", "McCartney", 80000), tree);
 addPersonToBST(new Employee(tree.generateKey(), "Ringo", "Starr", 40000), tree);
 addPersonToBST(new Person(tree.generateKey(), "Chuck", "Berry"), tree);
@@ -61,3 +63,7 @@ printBST("\nAfter Removing Keith Richards", tree);
 
 tree.removeValue(dgKey);
 printBST("\nAfter Removing Bill Withers", tree);
+
+tree.removeValue(rootKey);
+printBST("\nAfter Removing George Harrison", tree);
+
